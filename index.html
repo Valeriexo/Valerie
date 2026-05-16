@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>House of Dolls</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: #080808;
+      color: #f2eee8;
+      font-family: Georgia, serif;
+    }
+
+    header {
+      min-height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.75)), url("33.jpg") center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 9vw, 8rem);
+      color: #c11212;
+      font-style: italic;
+      font-weight: normal;
+      line-height: 0.9;
+    }
+
+    header p {
+      max-width: 650px;
+      margin-top: 25px;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: #ddd;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(8px);
+      z-index: 10;
+    }
+
+    nav div:last-child {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 16px;
+    }
+
+    nav a {
+      color: #f2eee8;
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    nav a:hover { color: #c11212; }
+
+    .logo {
+      color: #c11212;
+      font-style: italic;
+      font-size: 1.4rem;
+      white-space: nowrap;
+    }
+
+    section { padding: 80px 8%; }
+
+    .intro { max-width: 800px; margin: auto; text-align: center; }
+
+    .intro h2,
+    .gallery-title,
+    .contact h2 {
+      color: #c11212;
+      font-size: 2.3rem;
+      font-weight: normal;
+      margin-bottom: 20px;
+    }
+
+    .intro p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #ccc;
+    }
+
+    .gallery-title { text-align: center; margin-bottom: 45px; }
+
+    .sub-title {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+      font-weight: normal;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .red-title { color: #d31313; margin-top: 80px; }
+    .blue-title { color: #7ce7e7; }
+    .gold-title { color: #f2c16b; }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 430px;
+      object-fit: cover;
+      border: 1px solid #2a2a2a;
+      cursor: pointer;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      background: #111;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.03);
+      opacity: 0.85;
+    }
+
+    .quote {
+      text-align: center;
+      font-size: 1.4rem;
+      color: #c11212;
+      font-style: italic;
+      padding: 80px 20px;
+      background: #111;
+    }
+
+    .contact { text-align: center; }
+
+    .contact p { color: #ccc; margin-bottom: 20px; }
+
+    .button {
+      display: inline-block;
+      padding: 12px 26px;
+      border: 1px solid #c11212;
+      color: #c11212;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .button:hover { background: #c11212; color: #080808; }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #777;
+      font-size: 0.85rem;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99;
+      background: rgba(0,0,0,0.92);
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .lightbox.active { display: flex; }
+
+    .lightbox img {
+      max-width: 92vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border: 1px solid #333;
+    }
+
+    .close-lightbox {
+      position: fixed;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 2.5rem;
+      cursor: pointer;
+      z-index: 100;
+      line-height: 1;
+    }
+
+    @media (max-width: 900px) {
+      nav {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 20px;
+      }
+
+      nav div:last-child {
+        justify-content: flex-start;
+        gap: 10px 14px;
+      }
+
+      nav a { font-size: 0.72rem; }
+      header { padding-top: 120px; }
+    }
+
+    @media (max-width: 700px) {
+      section { padding: 60px 5%; }
+      .gallery { grid-template-columns: 1fr; gap: 18px; }
+      .gallery img { height: auto; max-height: none; }
+      .intro h2, .gallery-title, .contact h2 { font-size: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">House of Dolls</div>
+    <div>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#inher">In Her Eyes</a>
+      <a href="#bloodytsukuyomi">Bloody Tsukuyomi</a>
+      <a href="#alonewithyou">Alone With You</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <header>
+    <h1>House Of Dolls</h1>
+    <p>I still listen, I still look, I wait still.</p>
+  </header>
+
+  <section id="about" class="intro">
+    <h2>About the Series</h2>
+    <p>
+      House of Dolls is a cinematic photography series exploring longing, melancholy,
+      abandonment, and emotional distance.
+    </p>
+  </section>
+
+  <!-- FIRST SET -->
+  <section id="gallery">
+    <h2 class="gallery-title">House of Dolls</h2>
+    <div class="gallery">
+      <img src="33.jpg" alt="House of Dolls photo 1" />
+      <img src="34.jpg" alt="House of Dolls photo 2" />
+      <img src="35.jpg" alt="House of Dolls photo 3" />
+      <img src="36.jpg" alt="House of Dolls photo 4" />
+      <img src="37.jpg" alt="House of Dolls photo 5" />
+      <img src="38.jpg" alt="House of Dolls photo 6" />
+    </div>
+  </section>
+
+  <!-- SECOND SET -->
+  <section id="inher">
+    <h2 class="gallery-title">In Her Eyes</h2>
+    <div class="gallery">
+      <img src="8.jpg" alt="In Her Eyes photo 1" />
+      <img src="9.jpg" alt="In Her Eyes photo 2" />
+      <img src="1.jpg" alt="In Her Eyes photo 3" />
+      <img src="3.jpg" alt="In Her Eyes photo 4" />
+      <img src="4.jpg" alt="In Her Eyes photo 5" />
+      <img src="5.jpg" alt="In Her Eyes photo 6" />
+    </div>
+  </section>
+
+  <!-- BLOODY TSUKUYOMI -->
+  <section id="bloodytsukuyomi">
+    <h2 class="gallery-title">Bloody Tsukuyomi</h2>
+
+    <h3 class="sub-title blue-title">Tsukuyomi</h3>
+    <div class="gallery">
+      <img src="blue12.jpg" alt="Tsukuyomi blue moon photo 1" />
+      <img src="blue13.jpg" alt="Tsukuyomi blue moon photo 2" />
+      <img src="blue15.jpg" alt="Tsukuyomi blue moon photo 3" />
+    </div>
+
+    <h3 class="sub-title red-title">Bloody Mary</h3>
+    <div class="gallery">
+      <img src="red8.jpg" alt="Bloody Mary red moon photo 1" />
+      <img src="red9.jpg" alt="Bloody Mary red moon photo 2" />
+      <img src="red18.jpg" alt="Bloody Mary red moon photo 3" />
+    </div>
+  </section>
+
+  <!-- ALONE WITH YOU -->
+  <section id="alonewithyou">
+    <h2 class="gallery-title gold-title">Alone With You</h2>
+    <div class="gallery">
+      <img src="g1.jpg" alt="Alone With You photo 1" />
+      <img src="g2.jpg" alt="Alone With You photo 2" />
+      <img src="g3.jpg" alt="Alone With You photo 3" />
+      <img src="g25.jpg" alt="Alone With You photo 4" />
+      <img src="24.jpg" alt="Alone With You photo 5" />
+      <img src="I still listen, I still look, I wait still..jpg" alt="Alone With You photo 6" />
+    </div>
+  </section>
+
+  <div class="quote">
+    “A story of longing, identity, and isolation.”
+  </div>
+
+  <section id="contact" class="contact">
+    <h2>Contact</h2>
+    <p>Photography by 8S.PICS</p>
+    <a class="button" href="https://www.instagram.com/8s.pics/" target="_blank">View Instagram</a>
+  </section>
+
+  <footer>
+    © 2026 House of Dolls. All rights reserved.
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <span class="close-lightbox" id="closeLightbox">&times;</span>
+    <img id="lightboxImage" src="" alt="Expanded photo" />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const closeLightbox = document.getElementById('closeLightbox');
+
+    document.querySelectorAll('.gallery img').forEach((image) => {
+      image.addEventListener('click', () => {
+        lightboxImage.src = image.src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    closeLightbox.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+      lightboxImage.src = '';
+    });
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        lightbox.classList.remove('active');
+        lightboxImage.src = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
